@@ -1,23 +1,36 @@
 import { Component } from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
-import { jello, tada, backOutRight, rubberBand, bounceInDown, shakeY} from "ng-animate";
+import { jello, tada, backOutRight, rubberBand, bounceInDown, shakeY, shakeX, pulse} from "ng-animate";
 import { delay, lastValueFrom, timer } from 'rxjs';
+
+// Même durée que l'animation de FadeIn
+const SPAWN_DURATION_MS = 500;
+
+// Même durée que l'animation de FadeOut
+const DEATH_DURATION_SECONDS = 0.5;
+const DEATH_DURATION_MS = DEATH_DURATION_SECONDS * 1000;
+
+const FLEE_DURATION_SECONDS = 1;
+const FLEE_DURATION_MS = FLEE_DURATION_SECONDS * 1000;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations:[
+    trigger('shake', [transition(':increment', useAnimation(shakeX, {params: {timing: DEATH_DURATION_SECONDS}}))]),
     trigger('jello', [transition(':increment', useAnimation(rubberBand, {params: {timing: 2}}))]),
-    trigger('tada', [transition(':increment', useAnimation(tada, {params: {timing: 2}}))]),
-    trigger('backOutRight', [transition(':increment', useAnimation(backOutRight, {params: {timing: 2}}))]),
-    trigger('enter', [transition(':increment', useAnimation(bounceInDown, {params: {timing: 1}}))]),
+    trigger('tada', [transition(':increment', useAnimation(pulse, {params: {timing: 0.5, scale: 2.5}}))]),
+    trigger('backOutRight', [transition(':increment', useAnimation(backOutRight, {params: {timing: FLEE_DURATION_SECONDS}}))]),
     trigger('enter', [transition(':increment', useAnimation(jello, {params: {timing: 10}}))]),
     trigger('burn', [transition(':increment', useAnimation(shakeY, {params: {timing: 1}}))]),
 
   ]
 })
 export class AppComponent {
+  slimeIsPresent = false;
+  cantInteractWithSlime = false;
+
   ng_shake = 0;
   ng_bounce = 0;
   ng_flip = 0;
@@ -25,7 +38,7 @@ export class AppComponent {
   ng_burn = 0;
   ng_tada = 0;
   ng_backOutRight = 0;
-  ng_enter = 0;
+  ng_spawn = 0;
 
   css_shake_infinite= false;
   css_bounce_infinite = false;
@@ -140,9 +153,43 @@ export class AppComponent {
     this.bounceMe();
   }
 
-  enter() {
-    // Jouer 2 animations (ajouter celle de jello) et rendre invisible au tout début!
-    this.ng_enter++;
+  waitUntilEndOfAnimation(delay:number){
+    this.cantInteractWithSlime = true;
+    setTimeout(() => this.cantInteractWithSlime = false, delay);
+  }
+
+  showSlime(){
+    this.slimeIsPresent = true;
+    var element = document.getElementById("slimey");
+    element?.classList.remove("fadeOut");
+    element?.classList.add("fadeIn");
+  }
+
+  hideSlime(){
+    this.slimeIsPresent = false;
+    var element = document.getElementById("slimey");
+    element?.classList.remove("fadeIn");
+    element?.classList.add("fadeOut");
+  }
+
+  spawn() {
+    // Simple showSlime
+    this.showSlime();
+    this.waitUntilEndOfAnimation(SPAWN_DURATION_MS);
+  }
+
+  death(){
+    // Ajout d'une animation angular
+    this.hideSlime();
+    this.ng_shake++;
+    this.waitUntilEndOfAnimation(DEATH_DURATION_MS);
+  }
+
+  flee(){
+    // Garder le blob caché après!
+    this.ng_backOutRight++;
+    this.slimeIsPresent = false;
+    this.waitUntilEndOfAnimation(FLEE_DURATION_MS);
   }
 
   hit(){
@@ -152,11 +199,6 @@ export class AppComponent {
   attack(){
     // TODO: Augment the intensity of the movement!
     this.ng_tada++;
-  }
-
-  flee(){
-    // Garder le blob caché après!
-    this.ng_backOutRight++;
   }
 
   burn(){
@@ -173,9 +215,7 @@ export class AppComponent {
     // Make it scale! + Add a Crown!
   }
 
-  death(){
-    // Make it dissovle (lowering opacity, widening a bit and squeazing down!)
-  }
+  
 
   // TODO: Make an idle breathing animation?
 }

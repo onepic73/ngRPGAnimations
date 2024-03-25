@@ -1,13 +1,14 @@
 <div style="">
   <img width="800" style="position: relative; " src="../assets/background.png"/>
-  <img [@enter]="ng_enter" [@burn]="ng_burn" [@jello]="ng_jello" [@tada]="ng_tada" [@backOutRight]="ng_backOutRight"  width="150" style="z-index: 10; position: absolute; top: 250px; left: 350px;" src="../assets/slimeyWithBorder.png"/>
+  <img id="slimey" class="slime" [@enter]="ng_spawn" [@shake]="ng_shake" [@burn]="ng_burn" [@jello]="ng_jello" [@tada]="ng_tada" [@backOutRight]="ng_backOutRight"  width="150" style="z-index: 10; position: absolute; top: 250px; left: 350px;" src="../assets/slimeyWithBorder.png"/>
 
 </div>
 
 <div style="padding: 20px">
-  <button mat-raised-button color="accent" (click)="enter()">Enter</button>
-  <button mat-raised-button color="accent" (click)="attack()">Attack</button>
-  <button mat-raised-button color="accent" (click)="hit()">Hit</button>
-  <button mat-raised-button color="accent" (click)="burn()">Burn</button>
-  <button mat-raised-button color="accent" (click)="flee()">Flee</button>
+  <button *ngIf="!slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="spawn()">Spawn</button>
+  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="attack()">Attack</button>
+  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="hit()">Hit</button>
+  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="burn()">Burn</button>
+  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="death()">Death</button>
+  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="flee()">Flee</button>
 </div>

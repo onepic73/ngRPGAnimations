@@ -1,0 +1,32 @@
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.slime
+{
+    opacity: 0;
+}
+
+.slime.fadeIn
+{
+    animation: fadeIn 0.5s forwards;
+    -webkit-animation: fadeIn 0.5s forwards;
+    -moz-animation: fadeIn 0.5s forwards;
+    -o-animation: fadeIn 0.5s forwards;
+    -ms-animation: fadeIn 0.5s forwards;
+}
+
+.slime.fadeOut
+{
+    animation: fadeOut 1.0s forwards;
+    -webkit-animation: fadeOut 1.0s forwards;
+    -moz-animation: fadeOut 1.0s forwards;
+    -o-animation: fadeOut 1.0s forwards;
+    -ms-animation: fadeOut 1.0s forwards;
+}
