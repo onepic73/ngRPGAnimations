@@ -52,11 +52,6 @@ export class AppComponent {
     // TODO [Plus tard] Désactiver les boutons pendant que l'animation roule
   }
 
-  flee(){
-    // TODO ???
-    // TODO Garder le blob caché après!
-  }
-
   attack(){
     // TODO Augmenter l'intensité du mouvement avec scale (Regarder dans le code!)
     // TODO Jouer une animation juste avant!
