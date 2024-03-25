@@ -16,10 +16,16 @@ export class AppComponent {
   constructor() {
   }
 
+  showSlime(){
+    var element = document.getElementById("slimeyId");
+    element?.classList.remove("fadeOut");
+    element?.classList.add("fadeIn");
+  }
+
   spawn() {
     this.slimeIsPresent = true;
-    // Simple showSlime, Montrer l'importance de forwards!
-    // TODO: Montrer l'importance de forwards!
+    // Utiliser showSlime pour afficher Slimey
+    this.showSlime();
   }
 
   death(){
