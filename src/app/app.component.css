@@ -8,8 +8,19 @@
     100% { opacity: 1; }
 }
 
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 .slime.fadeIn
 {
-    animation: fadeIn 0.5s;
-    -webkit-animation: fadeIn 0.5s;
+    animation: fadeIn 0.5s forwards;
+    -webkit-animation: fadeIn 0.5s forwards;
+}
+
+.slime.fadeOut
+{
+    animation: fadeOut 0.5s forwards;
+    -webkit-animation: fadeOut 0.5s forwards;
 }
