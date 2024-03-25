@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
-import {shakeX} from "ng-animate";
+import {shakeX, pulse, jello} from "ng-animate";
 
 // Même durée que l'animation de FadeIn
 const SPAWN_DURATION_MS = 500;
 
 const DEATH_DURATION_SECONDS = 0.5;
+const PREATTACK_JELLO_DURATION_SECONDS = 0.5;
+const ATTACK_PULSE_DURATION_SECONDS = 0.3;
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,8 @@ const DEATH_DURATION_SECONDS = 0.5;
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('death', [transition(':increment', useAnimation(shakeX, {params: {timing: DEATH_DURATION_SECONDS}}))]),
+    trigger('attack', [transition(':increment', useAnimation(pulse, {params: {timing: ATTACK_PULSE_DURATION_SECONDS, scale: 4.5}}))]),
+    trigger('preAttack', [transition(':increment', useAnimation(jello, {params: {timing: PREATTACK_JELLO_DURATION_SECONDS}}))]),
   ]
   
 })
@@ -21,6 +25,8 @@ export class AppComponent {
   cantInteractWithSlime = false;
 
   ng_death = 0;
+  ng_attack = 0;
+  ng_preAttack = 0;
   
   constructor() {
   }
@@ -54,6 +60,8 @@ export class AppComponent {
 
   attack(){
     // TODO Augmenter l'intensité du mouvement avec scale (Regarder dans le code!)
+    this.ng_preAttack++;
+    setTimeout(() => this.ng_attack++, 200);
     // TODO Jouer une animation juste avant!
   }
 
