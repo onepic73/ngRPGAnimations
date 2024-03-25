@@ -13,31 +13,35 @@ const DEATH_DURATION_MS = DEATH_DURATION_SECONDS * 1000;
 const FLEE_DURATION_SECONDS = 1;
 const FLEE_DURATION_MS = FLEE_DURATION_SECONDS * 1000;
 
+const ATTACK_PULSE_DURATION_SECONDS = 0.3;
+const ATTACK_PULSE_DURATION_MS = ATTACK_PULSE_DURATION_SECONDS * 1000;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations:[
-    trigger('shake', [transition(':increment', useAnimation(shakeX, {params: {timing: DEATH_DURATION_SECONDS}}))]),
+    trigger('death', [transition(':increment', useAnimation(shakeX, {params: {timing: DEATH_DURATION_SECONDS}}))]),
+    
+    
     trigger('jello', [
       transition(':increment', useAnimation(jello, {params: {timing: 0.5}}))
     ]),
-    trigger('tada', [transition(':increment', useAnimation(pulse, {params: {timing: 0.5, scale: 2.5}}))]),
+    trigger('tada', [transition(':increment', useAnimation(pulse, {params: {timing: ATTACK_PULSE_DURATION_SECONDS, scale: 3.5}}))]),
     trigger('backOutRight', [transition(':increment', useAnimation(backOutRight, {params: {timing: FLEE_DURATION_SECONDS}}))]),
     trigger('enter', [transition(':increment', useAnimation(jello, {params: {timing: 10}}))]),
-    trigger('burn', [transition(':increment', useAnimation(shakeY, {params: {timing: 1}}))]),
-
   ]
 })
 export class AppComponent {
   slimeIsPresent = false;
   cantInteractWithSlime = false;
 
-  ng_shake = 0;
+  ng_death = 0;
+
+
   ng_bounce = 0;
   ng_flip = 0;
   ng_jello = 0;
-  ng_burn = 0;
   ng_tada = 0;
   ng_backOutRight = 0;
   ng_spawn = 0;
@@ -60,20 +64,19 @@ export class AppComponent {
   }
 
   showSlime(){
-    this.slimeIsPresent = true;
-    var element = document.getElementById("slimey");
+    var element = document.getElementById("slimeyId");
     element?.classList.remove("fadeOut");
     element?.classList.add("fadeIn");
   }
 
   hideSlime(){
-    this.slimeIsPresent = false;
     var element = document.getElementById("slimey");
     element?.classList.remove("fadeIn");
     element?.classList.add("fadeOut");
   }
 
   spawn() {
+    this.slimeIsPresent = true;
     // Simple showSlime
     this.showSlime();
     // TODO: Montrer l'importance de forwards!
@@ -81,9 +84,10 @@ export class AppComponent {
   }
 
   death(){
+    this.slimeIsPresent = false;
     this.hideSlime();
     // Ajout d'une animation angular
-    this.ng_shake++;
+    this.ng_death++;
     this.waitUntilEndOfAnimation(DEATH_DURATION_MS);
   }
 
@@ -95,15 +99,14 @@ export class AppComponent {
   }
 
   attack(){
-    // TODO: Augment the intensity of the movement avec scale! (Regarder dans le code!)
-    // TODO: Augment the intensity of the movement!
-    // TODO: Jouer deux animaions (une après l'aure!)
+    // TODO: Augmenter l'intensité du mouvement avec scale (Regarder dans le code!)
+    // TODO: Jouer une animation juste avant!
     this.ng_tada++;
   }
 
   hit(){
-    //Utilisé anamista pour faire une animation différente avec css
+    //Utilisé anamista pour faire une animation différente avec css (wobble)
     this.css_hit = true;
-    //setTimeout(() => this.css_hit = false, 1000);
+    setTimeout(() => this.css_hit = false, 800);
   }
 }

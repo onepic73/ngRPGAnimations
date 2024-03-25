@@ -1,6 +1,9 @@
 <div style="">
   <img width="800" style="position: relative; " src="../assets/background.png"/>
-  <img id="slimey" [class.slime]="true" [class.wobble-hor-bottom]="css_hit" [@enter]="ng_spawn" [@shake]="ng_shake" [@burn]="ng_burn" [@jello]="ng_jello" [@tada]="ng_tada" [@backOutRight]="ng_backOutRight"  width="150" style="z-index: 10; position: absolute; top: 250px; left: 350px;" src="../assets/slimeyWithBorder.png"/>
+  <div [class.wobble-hor-bottom]="css_hit" style="width: fit-content; position: absolute; top: 250px; left: 350px;">
+    <img id="slimeyId" [class.slime]="true" [@enter]="ng_spawn" [@death]="ng_death" [@jello]="ng_jello" [@tada]="ng_tada" [@backOutRight]="ng_backOutRight"  width="150" src="../assets/slimeyWithBorder.png"/>
+  </div>
+  
 </div>
 
 <div style="padding: 20px">
