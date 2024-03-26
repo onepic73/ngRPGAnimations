@@ -8,6 +8,7 @@ const SPAWN_DURATION_MS = 500;
 const DEATH_DURATION_SECONDS = 0.5;
 const PREATTACK_JELLO_DURATION_SECONDS = 0.5;
 const ATTACK_PULSE_DURATION_SECONDS = 0.3;
+const HIT_WOBBLE_DURATION_SECONDS = 0.3;
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ const ATTACK_PULSE_DURATION_SECONDS = 0.3;
     trigger('attack', [transition(':increment', useAnimation(pulse, {params: {timing: ATTACK_PULSE_DURATION_SECONDS, scale: 4.5}}))]),
     trigger('preAttack', [transition(':increment', useAnimation(jello, {params: {timing: PREATTACK_JELLO_DURATION_SECONDS}}))]),
   ]
-  
+
 })
 export class AppComponent {
   slimeIsPresent = false;
@@ -27,7 +28,9 @@ export class AppComponent {
   ng_death = 0;
   ng_attack = 0;
   ng_preAttack = 0;
-  
+
+  css_hit = false;
+
   constructor() {
   }
 
@@ -65,7 +68,10 @@ export class AppComponent {
     // TODO Jouer une animation juste avant!
   }
 
+
   hit(){
-    // TODO Utilisé Animista pour faire une animation différente avec css (wobble)
+    // TODO Utilisé Animista pour faire une animation (wobble) avec css
+    this.css_hit = true;
+    setTimeout(() => this.css_hit = false, HIT_WOBBLE_DURATION_SECONDS * 1000);
   }
 }
