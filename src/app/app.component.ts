@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
 
-// Même durée que l'animation de FadeIn
-const SPAWN_DURATION_MS = 500;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,29 +8,25 @@ const SPAWN_DURATION_MS = 500;
 })
 export class AppComponent {
   slimeIsPresent = false;
-  cantInteractWithSlime = false;
-  
+
   constructor() {
   }
 
   spawn() {
     this.slimeIsPresent = true;
-    // Simple showSlime, Montrer l'importance de forwards!
-    // TODO: Montrer l'importance de forwards!
+    // TODO Animation angular avec forwards
   }
 
   death(){
     this.slimeIsPresent = false;
-    // TODO Cacher le slime
-    
-    // TODO Déclencher une animation angular pour la mort
-    
-    // TODO [Plus tard] Désactiver les boutons pendant que l'animation roule
+    // TODO Animation angular avec forwards
+
+    // TODO 2e animation angular en même temps
   }
 
   attack(){
-    // TODO Augmenter l'intensité du mouvement avec scale (Regarder dans le code!)
-    // TODO Jouer une animation juste avant!
+    // TODO Jouer une animation et augmenter l'intensité du mouvement avec scale
+    // TODO Jouer une autre animation avant
   }
 
   hit(){

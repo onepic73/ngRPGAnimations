@@ -5,8 +5,8 @@
   </div>
 </div>
 <div style="padding: 20px">
-  <button *ngIf="!slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="spawn()">Spawn</button>
-  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="death()">Death</button>
-  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="attack()">Attack</button>
-  <button *ngIf="slimeIsPresent" [disabled]="cantInteractWithSlime" mat-raised-button color="accent" (click)="hit()">Hit</button>
+  <button *ngIf="!slimeIsPresent" mat-raised-button color="accent" (click)="spawn()">Spawn</button>
+  <button *ngIf="slimeIsPresent" mat-raised-button color="accent" (click)="death()">Death</button>
+  <button *ngIf="slimeIsPresent" mat-raised-button color="accent" (click)="attack()">Attack</button>
+  <button *ngIf="slimeIsPresent" mat-raised-button color="accent" (click)="hit()">Hit</button>
 </div>
