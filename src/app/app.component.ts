@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
-import { shakeX, pulse, headShake } from 'ng-animate';
+import { shakeX, pulse, headShake, bounce, flip } from 'ng-animate';
 
 const DEATH_DURATION_SECONDS : number = 0.5;
 const PRE_ATTACK_DURATION_SECONDS: number = 0.5;
 const ATTACK_DURATION_SECONDS: number = 0.3;
 const HIT_WOBBLE_DURATION_SECONDS = 0.3;
+
+const FLIP_SHAKE_SEQUENCE_DURATION_SECONDS = 0.75;
+const BOUNCE_SEQUENCE_DURATION_SECONDS = 0.75;
 
 @Component({
   selector: 'app-root',
@@ -15,6 +18,9 @@ const HIT_WOBBLE_DURATION_SECONDS = 0.3;
     trigger('death', [transition(':increment', useAnimation(shakeX, {params: {timing: DEATH_DURATION_SECONDS}}))]),
     trigger('attack', [transition(':increment', useAnimation(pulse, {params:{timing:ATTACK_DURATION_SECONDS, scale:4.5, delay:PRE_ATTACK_DURATION_SECONDS}}))]),
     trigger('preAttack',[transition(':increment', useAnimation(headShake, {params:{timing:PRE_ATTACK_DURATION_SECONDS, scale:0.2}}))]),
+    trigger('bounce', [transition(':increment', useAnimation(bounce, {params: {timing: DEATH_DURATION_SECONDS}}))]),
+    trigger('shake', [transition(':increment', useAnimation(shakeX, {params: {timing: FLIP_SHAKE_SEQUENCE_DURATION_SECONDS}}))]),
+    trigger('flip', [transition(':increment', useAnimation(flip, {params: {timing: BOUNCE_SEQUENCE_DURATION_SECONDS}}))]),
   ]
 })
 export class AppComponent {
@@ -23,6 +29,7 @@ export class AppComponent {
   ng_death = 0;
   ng_preAttack = 0;
   ng_Attack = 0;
+
 
   css_hit = false;
 
@@ -68,5 +75,13 @@ export class AppComponent {
     var element = document.getElementById("slimeyId");
     element?.classList.remove("fadeIn");
     element?.classList.add("fadeOut");
+  }
+
+  bounceShakeFlip(){
+
+  }
+
+  infiniteTripleSpin(){
+
   }
 }
